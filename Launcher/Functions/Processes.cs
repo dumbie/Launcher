@@ -6,7 +6,7 @@ namespace Launcher
     public class Processes
     {
         //Launch process as administrator
-        public static void ProcessStartAdmin(string fileName)
+        public static bool ProcessStartAdmin(string fileName)
         {
             try
             {
@@ -14,12 +14,13 @@ namespace Launcher
                 {
                     startProcess.StartInfo.FileName = fileName;
                     startProcess.StartInfo.Verb = "RunAs";
-                    startProcess.Start();
+                    return startProcess.Start();
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine("Failed to start process: " + ex.Message);
+                return false;
             }
         }
     }

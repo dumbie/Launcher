@@ -62,7 +62,14 @@ namespace Launcher
                     }
 
                     //Run application executable
-                    Processes.ProcessStartAdmin(Launcher_ExecutableFile);
+                    if (!Processes.ProcessStartAdmin(Launcher_ExecutableFile))
+                    {
+                        //Show launcher message
+                        List<string> messageAnswers = new List<string>();
+                        messageAnswers.Add("Ok");
+
+                        await new AVMessageBox().Popup(null, "Application Launcher", "Failed launching executable, please check your installation.", messageAnswers);
+                    }
 
                     //Registry disable uiaccess
                     if (!secureUIAEnabled)
@@ -84,8 +91,16 @@ namespace Launcher
                         string messageResult = await new AVMessageBox().Popup(null, Launcher_Description, "It seems like this is the first time you are using the launcher or the application path has changed so you will have to accept the upcoming administrator prompt, after that you will be able to run this launcher without the administrator prompt.", messageAnswers);
                         if (messageResult == "Continue")
                         {
-                            //Request administrator access
-                            Processes.ProcessStartAdmin(Launcher_FilePath);
+                            //Run application executable
+                            if (!Processes.ProcessStartAdmin(Launcher_FilePath))
+                            {
+                                //Show launcher message
+                                List<string> messageAnswersAdmin = new List<string>();
+                                messageAnswersAdmin.Add("Ok");
+
+                                await new AVMessageBox().Popup(null, "Application Launcher", "Failed restarting as administrator, please check your installation.", messageAnswersAdmin);
+                                return;
+                            }
                         }
                     }
                     else
