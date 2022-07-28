@@ -24,7 +24,6 @@ namespace Launcher
                     //Show launcher message
                     List<string> messageAnswers = new List<string>();
                     messageAnswers.Add("Ok");
-
                     string messageResult = await new AVMessageBox().Popup(null, "Application Launcher", "No executable found to launch, please check your installation.", messageAnswers);
                     return;
                 }
@@ -50,7 +49,7 @@ namespace Launcher
                     }
 
                     //Install certificate
-                    byte[] certificateBytes = await EmbeddedResources.EmbeddedResourceToBytes("Launcher.Certificate.ArnoldVinkCertificate.cer");
+                    byte[] certificateBytes = EmbeddedResources.EmbeddedResourceToBytes("Launcher.Certificate.ArnoldVinkCertificate.cer");
                     Certificate.InstallCertificate(certificateBytes);
 
                     //Registry enable uiaccess
@@ -67,7 +66,6 @@ namespace Launcher
                         //Show launcher message
                         List<string> messageAnswers = new List<string>();
                         messageAnswers.Add("Ok");
-
                         await new AVMessageBox().Popup(null, "Application Launcher", "Failed launching executable, please check your installation.", messageAnswers);
                     }
 
@@ -97,7 +95,6 @@ namespace Launcher
                                 //Show launcher message
                                 List<string> messageAnswersAdmin = new List<string>();
                                 messageAnswersAdmin.Add("Ok");
-
                                 await new AVMessageBox().Popup(null, "Application Launcher", "Failed restarting as administrator, please check your installation.", messageAnswersAdmin);
                                 return;
                             }
@@ -113,6 +110,11 @@ namespace Launcher
             catch (Exception ex)
             {
                 Debug.WriteLine("Launcher error: " + ex.Message);
+
+                //Show launcher message
+                List<string> messageAnswers = new List<string>();
+                messageAnswers.Add("Ok");
+                await new AVMessageBox().Popup(null, "Application Launcher", "Launcher error: " + ex.Message, messageAnswers);
             }
             finally
             {

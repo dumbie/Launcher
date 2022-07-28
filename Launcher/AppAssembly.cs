@@ -11,9 +11,11 @@ namespace Launcher
         {
             try
             {
-                string fileName = "Resources\\" + args.Name.Split(',')[0] + ".dll";
-                Debug.WriteLine("Resolving assembly dll: " + fileName);
-                return Assembly.LoadFrom(fileName);
+                string fileName = "Launcher.Assembly." + args.Name.Split(',')[0] + ".dll";
+                byte[] fileBytes = EmbeddedResources.EmbeddedResourceToBytes(fileName);
+
+                Debug.WriteLine("Resolving embedded assembly dll: " + fileName);
+                return Assembly.Load(fileBytes);
             }
             catch (Exception ex)
             {

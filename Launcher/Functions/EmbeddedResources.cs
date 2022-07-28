@@ -2,13 +2,12 @@
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace Launcher
 {
     public class EmbeddedResources
     {
-        public static async Task<byte[]> EmbeddedResourceToBytes(string fileName)
+        public static byte[] EmbeddedResourceToBytes(string fileName)
         {
             try
             {
@@ -16,7 +15,7 @@ namespace Launcher
                 {
                     using (Stream fileStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(fileName))
                     {
-                        await fileStream.CopyToAsync(memoryStream);
+                        fileStream.CopyTo(memoryStream);
                         return memoryStream.ToArray();
                     }
                 }

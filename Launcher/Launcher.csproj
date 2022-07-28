@@ -46,8 +46,9 @@
     <ApplicationIcon>Assets\AppIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.10.1.0, Culture=neutral, PublicKeyToken=e25603a88b3aa7da, processorArchitecture=MSIL">
-      <HintPath>..\packages\TaskScheduler.2.10.1\lib\net452\Microsoft.Win32.TaskScheduler.dll</HintPath>
+    <Reference Include="Microsoft.Win32.TaskScheduler">
+      <HintPath>Assembly\Microsoft.Win32.TaskScheduler.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -104,7 +105,6 @@
     <EmbeddedResource Include="..\..\ArnoldVinkCertificate\ArnoldVinkCertificate.cer">
       <Link>Certificate\ArnoldVinkCertificate.cer</Link>
     </EmbeddedResource>
-    <None Include="packages.config" />
     <None Include="Properties\App.manifest" />
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +158,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assembly\Microsoft.Win32.TaskScheduler.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
