@@ -1,8 +1,8 @@
-﻿using System;
+﻿using ArnoldVinkCode;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using static Launcher.AppVariables;
 using static Launcher.Strings;
 
@@ -15,9 +15,9 @@ namespace Launcher
         {
             try
             {
-                Launcher_FilePath = Assembly.GetEntryAssembly().Location;
-                Launcher_WorkingPath = Path.GetDirectoryName(Launcher_FilePath);
-                Launcher_AppName = ReplaceLauncherName(Path.GetFileNameWithoutExtension(Launcher_FilePath));
+                Launcher_ExecutablePath = AVFunctions.ApplicationPathExecutable();
+                Launcher_WorkingPath = AVFunctions.ApplicationPathRoot();
+                Launcher_AppName = ReplaceLauncherName(Path.GetFileNameWithoutExtension(Launcher_ExecutablePath));
 
                 //Set working directory to executable path
                 Directory.SetCurrentDirectory(Launcher_WorkingPath);
@@ -42,7 +42,6 @@ namespace Launcher
                 Launcher_Author = "Arnold Vink";
                 Launcher_TaskName = "ArnoldVink_" + Launcher_AppName;
                 Launcher_Description = Launcher_AppName + " Launcher";
-
                 return true;
             }
             catch (Exception ex)

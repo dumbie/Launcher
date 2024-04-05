@@ -43,7 +43,7 @@ namespace Launcher
                         else
                         {
                             //Check if the application path has changed
-                            if (!task.Definition.Actions.ToString().Contains(Launcher_FilePath))
+                            if (!task.Definition.Actions.ToString().Contains(Launcher_ExecutablePath))
                             {
                                 Debug.WriteLine("Application path has changed.");
                                 return TaskStatus.PathChanged;
@@ -84,7 +84,7 @@ namespace Launcher
                         taskDefinition.Settings.IdleSettings.StopOnIdleEnd = false;
                         taskDefinition.Settings.AllowHardTerminate = false;
                         taskDefinition.Principal.RunLevel = TaskRunLevel.Highest;
-                        taskDefinition.Actions.Add(new ExecAction(Launcher_FilePath, null, Launcher_WorkingPath));
+                        taskDefinition.Actions.Add(new ExecAction(Launcher_ExecutablePath, null, Launcher_WorkingPath));
                         taskService.RootFolder.RegisterTaskDefinition(Launcher_TaskName, taskDefinition);
                         return true;
                     }
