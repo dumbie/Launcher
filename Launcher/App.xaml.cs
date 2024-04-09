@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 
 namespace Launcher
 {
@@ -9,9 +8,6 @@ namespace Launcher
         {
             try
             {
-                //Resolve missing assembly dll files
-                AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolveEmbedded;
-
                 //Run application startup code
                 await AppStartup();
             }

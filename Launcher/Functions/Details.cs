@@ -8,10 +8,10 @@ using static Launcher.Strings;
 
 namespace Launcher
 {
-    public partial class App
+    public class Details
     {
         //Set application details
-        private bool AppSetDetails()
+        public static bool AppSetDetails()
         {
             try
             {
@@ -22,7 +22,7 @@ namespace Launcher
                 //Set working directory to executable path
                 Directory.SetCurrentDirectory(Launcher_LauncherRootPath);
 
-                //Check application name
+                //Check target application name
                 if (Launcher_TargetName.ToLower() == "launcher")
                 {
                     Debug.WriteLine("Looking for valid executable files.");

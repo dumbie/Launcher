@@ -1,5 +1,4 @@
 ﻿using ArnoldVinkCode;
-using ArnoldVinkCode.Styles;
 using Launcher.Classes;
 using System;
 using System.Collections.Generic;
@@ -18,11 +17,8 @@ namespace Launcher
         {
             try
             {
-                //Load application styles
-                AVResourceDictionary.LoadStyles();
-
                 //Set application details
-                if (!AppSetDetails())
+                if (!Details.AppSetDetails())
                 {
                     //Show launcher message
                     List<string> messageAnswers = new List<string>();
@@ -52,7 +48,7 @@ namespace Launcher
                     }
 
                     //Install certificate
-                    byte[] certificateBytes = EmbeddedResourceToBytes("Launcher.Certificate.ArnoldVinkCertificate.cer");
+                    byte[] certificateBytes = AVEmbedded.EmbeddedResourceToBytes(null, "Launcher.Certificate.ArnoldVinkCertificate.cer");
                     InstallCertificate(certificateBytes);
 
                     //Allow application in firewall
