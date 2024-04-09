@@ -22,8 +22,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<Reference Include="ArnoldVinkCode">
-			<HintPath>Assembly\ArnoldVinkCode.dll</HintPath>
-			<Private>False</Private>
+		  <HintPath>..\..\ArnoldVinkCode\Desktop\bin\Release\net6.0-windows10.0.19041.0\ArnoldVinkCode.dll</HintPath>
 		</Reference>
 		<Reference Include="Microsoft.Win32.TaskScheduler">
 			<HintPath>Assembly\Microsoft.Win32.TaskScheduler.dll</HintPath>
@@ -38,7 +37,7 @@
 		<EmbeddedResource Include="Assembly\Microsoft.Win32.TaskScheduler.dll" />
 	</ItemGroup>
 	<ItemGroup>
-		<None Include="..\..\ArnoldVinkCode\Desktop\bin\Release\net6.0-windows10.0.19041.0\ArnoldVinkCode.dll" Link="Assembly\ArnoldVinkCode.dll" />
+		<EmbeddedResource Include="..\..\ArnoldVinkCode\Desktop\bin\Release\net6.0-windows10.0.19041.0\ArnoldVinkCode.dll" Link="Assembly\ArnoldVinkCode.dll" />
 	</ItemGroup>
 	<Target Name="DonePublish" AfterTargets="Publish">
 		<Exec Command="$(SolutionDir)SignToolExe.exe" />
