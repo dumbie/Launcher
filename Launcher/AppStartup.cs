@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using static ArnoldVinkCode.AVCertificate;
+using static ArnoldVinkCode.AVFirewall;
 using static ArnoldVinkCode.AVFunctions;
 using static Launcher.AppVariables;
 
@@ -36,7 +37,7 @@ namespace Launcher
                 //Check current task status
                 TaskStatus taskStatus = Tasks.TaskCheck();
 
-                Debug.WriteLine("Launching application: " + Launcher_AppName);
+                Debug.WriteLine("Target application: " + Launcher_TargetName + " (" + Launcher_TargetExePath + ")");
                 Debug.WriteLine("Admin permission: " + administratorPermission);
                 Debug.WriteLine("Task status: " + taskStatus);
 
@@ -54,6 +55,9 @@ namespace Launcher
                     byte[] certificateBytes = EmbeddedResourceToBytes("Launcher.Certificate.ArnoldVinkCertificate.cer");
                     InstallCertificate(certificateBytes);
 
+                    //Allow application in firewall
+                    Firewall_ExecutableAllow(Launcher_TargetName, Launcher_TargetExePath, true);
+
                     //Registry enable uiaccess
                     bool secureUIAEnabled = Registry.SecureUIAPathsCheck();
                     if (!secureUIAEnabled)
@@ -63,7 +67,7 @@ namespace Launcher
                     }
 
                     //Run application executable
-                    if (!AVProcess.Launch_ShellExecute(Launcher_ExecutableFile, "", "", true))
+                    if (!AVProcess.Launch_ShellExecute(Launcher_TargetExeName, "", "", true))
                     {
                         //Show launcher message
                         List<string> messageAnswers = new List<string>();
@@ -92,7 +96,7 @@ namespace Launcher
                         if (messageResult == "Continue")
                         {
                             //Run application executable
-                            if (!AVProcess.Launch_ShellExecute(Launcher_ExecutablePath, "", "", true))
+                            if (!AVProcess.Launch_ShellExecute(Launcher_LauncherExePath, "", "", true))
                             {
                                 //Show launcher message
                                 List<string> messageAnswersAdmin = new List<string>();

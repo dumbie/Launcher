@@ -15,33 +15,34 @@ namespace Launcher
         {
             try
             {
-                Launcher_ExecutablePath = AVFunctions.ApplicationPathExecutable();
-                Launcher_WorkingPath = AVFunctions.ApplicationPathRoot();
-                Launcher_AppName = ReplaceLauncherName(Path.GetFileNameWithoutExtension(Launcher_ExecutablePath));
+                Launcher_LauncherExePath = AVFunctions.ApplicationPathExecutable();
+                Launcher_LauncherRootPath = AVFunctions.ApplicationPathRoot();
+                Launcher_TargetName = ReplaceLauncherName(Path.GetFileNameWithoutExtension(Launcher_LauncherExePath));
 
                 //Set working directory to executable path
-                Directory.SetCurrentDirectory(Launcher_WorkingPath);
+                Directory.SetCurrentDirectory(Launcher_LauncherRootPath);
 
                 //Check application name
-                if (Launcher_AppName.ToLower() == "launcher")
+                if (Launcher_TargetName.ToLower() == "launcher")
                 {
                     Debug.WriteLine("Looking for valid executable files.");
-                    string exeFile = Directory.GetFiles(Launcher_WorkingPath, "*.exe").Where(x => !Path.GetFileNameWithoutExtension(x).ToLower().Contains("updater") && !Path.GetFileNameWithoutExtension(x).ToLower().Contains("launcher")).FirstOrDefault();
+                    string exeFile = Directory.GetFiles(Launcher_LauncherRootPath, "*.exe").Where(x => !Path.GetFileNameWithoutExtension(x).ToLower().Contains("updater") && !Path.GetFileNameWithoutExtension(x).ToLower().Contains("launcher")).FirstOrDefault();
                     if (string.IsNullOrWhiteSpace(exeFile))
                     {
-                        Debug.WriteLine("Invalid app name detected: " + Launcher_AppName);
+                        Debug.WriteLine("Invalid app name detected: " + Launcher_TargetName);
                         return false;
                     }
                     else
                     {
-                        Launcher_AppName = ReplaceLauncherName(Path.GetFileNameWithoutExtension(exeFile));
+                        Launcher_TargetName = ReplaceLauncherName(Path.GetFileNameWithoutExtension(exeFile));
                     }
                 }
 
-                Launcher_ExecutableFile = Launcher_AppName + ".exe";
+                Launcher_TargetExeName = Launcher_TargetName + ".exe";
+                Launcher_TargetExePath = Path.Combine(Launcher_LauncherRootPath, Launcher_TargetExeName);
                 Launcher_Author = "Arnold Vink";
-                Launcher_TaskName = "ArnoldVink_" + Launcher_AppName;
-                Launcher_Description = Launcher_AppName + " Launcher";
+                Launcher_TaskName = "ArnoldVink_" + Launcher_TargetName;
+                Launcher_Description = Launcher_TargetName + " Launcher";
                 return true;
             }
             catch (Exception ex)
