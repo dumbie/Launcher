@@ -1,30 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net6.0-windows</TargetFramework>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<NoWarn>CA1416</NoWarn>
 		<OutputType>WinExe</OutputType>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<ApplicationIcon>Assets\AppIcon.ico</ApplicationIcon>
+		<ApplicationManifest>Properties\App.manifest</ApplicationManifest>
+		<StartupObject>Launcher.App</StartupObject>
+	</PropertyGroup>
+	<PropertyGroup>
+		<UseWPF>True</UseWPF>
 		<UseWindowsForms>True</UseWindowsForms>
-		<UseWPF>true</UseWPF>
+		<GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+		<ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<AppendTargetFrameworkToOutputPath>False</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>False</AppendRuntimeIdentifierToOutputPath>
+		<OutputPath>$(SolutionDir)Build\$(Configuration)\</OutputPath>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<Optimize>True</Optimize>
-		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<Optimize>True</Optimize>
 		<DebugType>none</DebugType>
 	</PropertyGroup>
-	<PropertyGroup>
-		<ApplicationManifest>Properties\App.manifest</ApplicationManifest>
-		<ApplicationIcon>Assets\AppIcon.ico</ApplicationIcon>
-		<StartupObject>Launcher.App</StartupObject>
-	</PropertyGroup>
-	<ItemGroup>
-		<Reference Include="ArnoldVinkCode">
-			<HintPath>..\..\ArnoldVinkCode\Desktop\bin\Release\net6.0-windows10.0.19041.0\ArnoldVinkCode.dll</HintPath>
-		</Reference>
-	</ItemGroup>
 	<ItemGroup>
 		<Resource Include="Assets\AppIcon.ico" />
 		<EmbeddedResource Include="..\..\ArnoldVinkCertificate\ArnoldVinkCertificate.cer">
@@ -33,6 +32,11 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="TaskScheduler" Version="2.10.1" />
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Include="ArnoldVinkCode">
+			<HintPath>$(SolutionDir)Build\$(Configuration)\ArnoldVinkCode.dll</HintPath>
+		</Reference>
 	</ItemGroup>
 	<Target Name="DonePublish" AfterTargets="Publish">
 		<Exec Command="$(SolutionDir)SignToolExe.exe" />
