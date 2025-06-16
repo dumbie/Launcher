@@ -15,7 +15,7 @@
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 		<AppendTargetFrameworkToOutputPath>False</AppendTargetFrameworkToOutputPath>
 		<AppendRuntimeIdentifierToOutputPath>False</AppendRuntimeIdentifierToOutputPath>
-		<OutputPath>$(SolutionDir)Build\$(Configuration)\</OutputPath>
+		<OutputPath>$(SolutionDir)Build\$(Configuration)\$(AssemblyName)</OutputPath>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<Optimize>True</Optimize>
@@ -31,11 +31,11 @@
 		</EmbeddedResource>
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="TaskScheduler" Version="2.11.0" />
+	  <PackageReference Include="TaskScheduler" Version="2.12.1" />
 	</ItemGroup>
 	<ItemGroup>
 		<Reference Include="ArnoldVinkCode">
-			<HintPath>$(SolutionDir)Build\$(Configuration)\ArnoldVinkCode.dll</HintPath>
+			<HintPath>$(SolutionDir)Build\$(Configuration)\ArnoldVinkCode\ArnoldVinkCode.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 	<Target Name="DonePublish" AfterTargets="Publish">

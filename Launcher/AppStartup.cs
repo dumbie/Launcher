@@ -1,11 +1,11 @@
 ﻿using ArnoldVinkCode;
-using Launcher.Classes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using static ArnoldVinkCode.AVCertificate;
 using static ArnoldVinkCode.AVFirewall;
 using static ArnoldVinkCode.AVFunctions;
+using static ArnoldVinkCode.AVTaskScheduler;
 using static Launcher.AppVariables;
 
 namespace Launcher
@@ -31,7 +31,7 @@ namespace Launcher
                 bool administratorPermission = ProcessCheckAdminPermission();
 
                 //Check current task status
-                TaskStatus taskStatus = Tasks.TaskCheck();
+                TaskStatus taskStatus = TaskCheck(Launcher_TaskName, Launcher_LauncherExePath);
 
                 Debug.WriteLine("Target application: " + Launcher_TargetName + " (" + Launcher_TargetExePath + ")");
                 Debug.WriteLine("Admin permission: " + administratorPermission);
@@ -41,10 +41,10 @@ namespace Launcher
                 if (administratorPermission)
                 {
                     //Check task status
-                    if (taskStatus == TaskStatus.NotFound || taskStatus == TaskStatus.Unknown || taskStatus == TaskStatus.PathChanged)
+                    if (taskStatus == TaskStatus.Unknown || taskStatus == TaskStatus.TaskNotFound || taskStatus == TaskStatus.ExeNotFound || taskStatus == TaskStatus.PathChanged)
                     {
                         //Create service task
-                        Tasks.TaskCreate();
+                        TaskCreate(Launcher_TaskName, Launcher_Description, Launcher_Author, Launcher_LauncherExePath, Launcher_LauncherRootPath);
                     }
 
                     //Install certificate
@@ -81,7 +81,7 @@ namespace Launcher
                 else
                 {
                     //Check task status
-                    if (taskStatus == TaskStatus.NotFound || taskStatus == TaskStatus.Unknown || taskStatus == TaskStatus.PathChanged)
+                    if (taskStatus == TaskStatus.Unknown || taskStatus == TaskStatus.TaskNotFound || taskStatus == TaskStatus.ExeNotFound || taskStatus == TaskStatus.PathChanged)
                     {
                         //Show launcher message
                         List<string> messageAnswers = new List<string>();
@@ -105,7 +105,7 @@ namespace Launcher
                     else
                     {
                         //Run service task
-                        Tasks.TaskRun();
+                        TaskRun(Launcher_TaskName);
                     }
                 }
             }
