@@ -105,7 +105,7 @@ namespace Launcher
                     else
                     {
                         //Run service task
-                        TaskRun(Launcher_TaskName);
+                        await TaskRun(Launcher_TaskName, string.Empty, true);
                     }
                 }
             }
